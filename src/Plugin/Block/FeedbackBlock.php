@@ -85,12 +85,16 @@ class FeedbackBlock extends BlockBase implements ContainerFactoryPluginInterface
       '#type' => 'details',
       '#title' => $this->t('@title', ['@title' => $this->configuration['label']]),
     ];
+    $build['feedback']['feedback_help'] = [
+      '#markup' => $this->configuration['feedback_help']
+    ];
     $build['feedback']['feedback_form'] = [
       '#lazy_builder' => ['feedback.lazy_builders:renderForm',
         [
           $this->configuration['feedback_type'],
           'internal:' . $this->path->getPath(),
           \Drupal::request()->getQueryString(),
+          $this->configuration['feedback_submit'],
         ]
       ],
       '#create_placeholder' => TRUE,
@@ -113,6 +117,9 @@ class FeedbackBlock extends BlockBase implements ContainerFactoryPluginInterface
    */
   public function blockForm($form, FormStateInterface $form_state) {
     $type = isset($this->configuration['feedback_type']) ? $this->configuration['feedback_type'] : '';
+    $message = $this->t('If you experience a bug or would like to see an addition on the current page, feel free to leave us a message.');
+    $message = isset($this->configuration['feedback_help']) ? $this->configuration['feedback_help'] : $message;
+    $submit = isset($this->configuration['feedback_submit']) ? $this->configuration['feedback_submit'] : $this->t('Send');
 
     $feedback_types = array_map(function ($item) {
       return $item['label'];
@@ -125,6 +132,23 @@ class FeedbackBlock extends BlockBase implements ContainerFactoryPluginInterface
       '#default_option' => $type,
       '#description' => $this->t('Select the feedback type which will be used.'),
     ];
+
+    $form['feedback_help'] = [
+      '#type' => 'textarea',
+      '#title' => $this->t('Help'),
+      '#default_value' => $message,
+      '#description' => $this->t('Feedback submission guidelines.'),
+    ];
+
+    $form['feedback_submit'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Submit button'),
+      '#default_value' => $submit,
+      '#description' => $this->t('Specify the label that will appear on the feedback submit button.'),
+    ];
+
+
+
     return $form;
   }
 
@@ -133,6 +157,8 @@ class FeedbackBlock extends BlockBase implements ContainerFactoryPluginInterface
    */
   public function blockSubmit($form, FormStateInterface $form_state) {
     $this->configuration['feedback_type'] = $form_state->getValue('feedback_type');
+    $this->configuration['feedback_help'] = $form_state->getValue('feedback_help');
+    $this->configuration['feedback_submit'] = $form_state->getValue('feedback_submit');
   }
 
 }

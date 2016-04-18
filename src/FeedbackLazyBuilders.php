@@ -17,6 +17,7 @@ use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Render\RendererInterface;
 use Drupal\Core\Session\AccountInterface;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\Core\Url;
 
 /**
@@ -115,7 +116,7 @@ class FeedbackLazyBuilders {
    * @return array
    *   A renderable array containing the comment form.
    */
-  public function renderForm($type, $path, $query_string = NULL) {
+  public function renderForm($type, $path, $query_string, $submit_label) {
     if ($query_string) {
       $path .= '?' . $query_string;
     }
@@ -125,7 +126,11 @@ class FeedbackLazyBuilders {
     ];
 
     $feedback = $this->entityManager->getStorage('feedback_message')->create($values);
-    return $this->entityFormBuilder->getForm($feedback);
+    $form = $this->entityFormBuilder->getForm($feedback);
+
+    $form['actions']['submit']['#value'] = $submit_label;
+
+    return $form;
   }
 
 }
