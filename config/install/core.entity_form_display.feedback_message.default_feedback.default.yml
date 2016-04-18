@@ -1,0 +1,30 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - feedback.feedback_message_type.default_feedback
+    - field.field.feedback_message.default_feedback.body
+  module:
+    - text
+_core:
+  default_config_hash: PaGBk4_oNqKu3JI5JE8D2sKPNy_7EpcM4024vpTIVa0
+id: feedback_message.default_feedback.default
+targetEntityType: feedback_message
+bundle: default_feedback
+mode: default
+content:
+  body:
+    weight: 1
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: text_textarea
+  langcode:
+    type: language_select
+    weight: 0
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  path: true
+  user_id: true

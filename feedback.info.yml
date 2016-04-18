@@ -1,0 +1,5 @@
+name: Feedback
+type: module
+description: Collect page feedback
+core: 8.x
+package: Feedback
