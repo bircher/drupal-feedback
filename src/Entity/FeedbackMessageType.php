@@ -59,4 +59,14 @@ class FeedbackMessageType extends ConfigEntityBundleBase implements FeedbackMess
    */
   protected $label;
 
+  /**
+   * Gets the success message for a feedback message type.
+   *
+   * @return string
+   *   The success message.
+   */
+  public function getSuccessMessage() {
+    return $this->get('success_message');
+  }
+
 }

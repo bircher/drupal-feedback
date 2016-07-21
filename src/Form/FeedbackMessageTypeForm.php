@@ -7,7 +7,6 @@
 
 namespace Drupal\feedback\Form;
 
-use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityForm;
 use Drupal\Core\Form\FormStateInterface;
 
@@ -23,6 +22,7 @@ class FeedbackMessageTypeForm extends EntityForm {
   public function form(array $form, FormStateInterface $form_state) {
     $form = parent::form($form, $form_state);
 
+    /* @var $feedback_message_type \Drupal\feedback\Entity\FeedbackMessageType */
     $feedback_message_type = $this->entity;
     $form['label'] = array(
       '#type' => 'textfield',
@@ -30,6 +30,15 @@ class FeedbackMessageTypeForm extends EntityForm {
       '#maxlength' => 255,
       '#default_value' => $feedback_message_type->label(),
       '#description' => $this->t("Label for the Feedback message type."),
+      '#required' => TRUE,
+    );
+
+    $form['success_message'] = array(
+      '#type' => 'textfield',
+      '#title' => $this->t('Success message'),
+      '#maxlength' => 255,
+      '#default_value' => $feedback_message_type->getSuccessMessage(),
+      '#description' => $this->t("The message to display on successful submission."),
       '#required' => TRUE,
     );
 

@@ -8,5 +8,8 @@ feedback.feedback_message_type.*:
     label:
       type: label
       label: 'Label'
+    success_message:
+      type: text
+      label: 'Success message'
     uuid:
       type: string
