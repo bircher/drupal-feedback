@@ -71,12 +71,12 @@ class FeedbackMessage extends ContentEntityBase implements FeedbackMessageInterf
     parent::preCreate($storage_controller, $values);
     $values += array(
       'user_id' => \Drupal::currentUser()->id(),
-//      'link' => self::getCurrentPath(),
+      // 'link' => self::getCurrentPath(),
     );
   }
 
   /**
-   * @inheritDoc
+   * {@inheritdoc}
    */
   public function label() {
     $label = $this->getEntityType()->getLabel() . " " . $this->id();
@@ -96,7 +96,7 @@ class FeedbackMessage extends ContentEntityBase implements FeedbackMessageInterf
   public function getPath() {
     return $this->get('link')->value;
   }
-  
+
   /**
    * {@inheritdoc}
    */
