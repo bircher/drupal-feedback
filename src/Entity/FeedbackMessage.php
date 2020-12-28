@@ -14,6 +14,7 @@ use Drupal\Core\Entity\EntityChangedTrait;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\feedback\FeedbackMessageInterface;
 use Drupal\link\LinkItemInterface;
+use Drupal\node\NodeInterface;
 use Drupal\user\UserInterface;
 
 /**
@@ -153,7 +154,7 @@ class FeedbackMessage extends ContentEntityBase implements FeedbackMessageInterf
    * {@inheritdoc}
    */
   public function setPublished($published) {
-    $this->set('status', $published ? NODE_PUBLISHED : NODE_NOT_PUBLISHED);
+    $this->set('status', $published ? NodeInterface::PUBLISHED : NodeInterface::NOT_PUBLISHED);
     return $this;
   }
 

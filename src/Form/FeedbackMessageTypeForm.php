@@ -65,17 +65,17 @@ class FeedbackMessageTypeForm extends EntityForm {
 
     switch ($status) {
       case SAVED_NEW:
-        drupal_set_message($this->t('Created the %label Feedback message type.', [
+        $this->messenger()->addStatus($this->t('Created the %label Feedback message type.', [
           '%label' => $feedback_message_type->label(),
         ]));
         break;
 
       default:
-        drupal_set_message($this->t('Saved the %label Feedback message type.', [
+        $this->messenger()->addStatus($this->t('Saved the %label Feedback message type.', [
           '%label' => $feedback_message_type->label(),
         ]));
     }
-    $form_state->setRedirectUrl($feedback_message_type->urlInfo('collection'));
+    $form_state->setRedirectUrl($feedback_message_type->toUrl('collection'));
   }
 
 }
