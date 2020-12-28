@@ -41,6 +41,13 @@ use Drupal\feedback\FeedbackMessageTypeInterface;
  *     "edit-form" = "/admin/structure/feedback_message_type/{feedback_message_type}/edit",
  *     "delete-form" = "/admin/structure/feedback_message_type/{feedback_message_type}/delete",
  *     "collection" = "/admin/structure/feedback_message_type"
+ *   },
+ *   config_export = {
+ *     "id",
+ *     "label",
+ *     "status",
+ *     "langcode",
+ *     "success_message",
  *   }
  * )
  */

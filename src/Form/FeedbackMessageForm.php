@@ -28,26 +28,13 @@ class FeedbackMessageForm extends ContentEntityForm {
   protected $feedbackMessageTypeStorage;
 
   /**
-   * Constructs a ContentEntityForm object.
-   *
-   * @param \Drupal\Core\Entity\EntityManagerInterface $entity_manager
-   *   The entity manager.
-   * @param \Drupal\Core\Config\Entity\ConfigEntityStorage $feedback_message_type_storage
-   *   The feedback message type storage.
-   */
-  public function __construct(EntityManagerInterface $entity_manager, ConfigEntityStorage $feedback_message_type_storage) {
-    parent::__construct($entity_manager);
-    $this->feedbackMessageTypeStorage = $feedback_message_type_storage;
-  }
-
-  /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container) {
-    return new static(
-      $container->get('entity.manager'),
-      $container->get('entity.manager')->getStorage('feedback_message_type')
-    );
+    $instance = parent::create($container);
+    $instance->feedbackMessageTypeStorage = $container->get('entity_type.manager')
+      ->getStorage('feedback_message_type');
+    return $instance;
   }
 
   /**
@@ -69,13 +56,13 @@ class FeedbackMessageForm extends ContentEntityForm {
 
     switch ($status) {
       case SAVED_NEW:
-        /* @var $message_type FeedbackMessageType */
+        /* @var $message_type \Drupal\feedback\Entity\FeedbackMessageType */
         $message_type = $this->feedbackMessageTypeStorage->load($entity->getType());
-        drupal_set_message($message_type->getSuccessMessage());
+        $this->messenger()->addStatus($message_type->getSuccessMessage());
         break;
 
       default:
-        drupal_set_message($this->t('Saved the %label Feedback message.', [
+        $this->messenger()->addStatus($this->t('Saved the %label Feedback message.', [
           '%label' => $entity->label(),
         ]));
     }

@@ -2,4 +2,5 @@ name: Feedback
 type: module
 description: Collect page feedback
 core: 8.x
+core_version_requirement: ^8 || ^9
 package: Feedback

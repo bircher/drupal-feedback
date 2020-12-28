@@ -7,6 +7,7 @@
 
 namespace Drupal\feedback\Controller;
 
+use Drupal\Core\Link;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
@@ -58,7 +59,7 @@ class FeedbackMessageAddController extends ControllerBase {
         return array(
           '#markup' => $this->t('You have not created any %bundle types yet. @link to add a new type.', [
             '%bundle' => 'Feedback message',
-            '@link' => $this->l($this->t('Go to the type creation page'), Url::fromRoute('entity.feedback_message_type.add_form')),
+            '@link' => Link::fromTextAndUrl($this->t('Go to the type creation page'), Url::fromRoute('entity.feedback_message_type.add_form')),
           ]),
         );
       }
